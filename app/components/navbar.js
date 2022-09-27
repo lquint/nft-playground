@@ -11,9 +11,10 @@ const user = {
     '',
 }
 const navigation = [
-  { name: 'Home', href: '/', current: true },
+  { name: 'Home', href: '/', current: false },
+  { name: 'Playground', href: '/playground', current: false },
   { name: 'About', href: '/about', current: false },
-  { name: '404', href: '/greg', current: false },
+  { name: '404', href: '/404', current: false },
 ]
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -25,7 +26,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Example() {
+const Navbar = () => { 
   const { data: session, status} = useSession({required: false});
   return (
     <>
@@ -214,3 +215,5 @@ export default function Example() {
     </>
   )
 }
+
+export default Navbar;
