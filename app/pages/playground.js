@@ -1,4 +1,4 @@
-import PlaygroundTable from '../components/PlaygroundTable';
+import PlaygroundTable from '../components/playgroundTable';
 import styles from '../styles/Home.module.css'
 
 const Playground = () => {
