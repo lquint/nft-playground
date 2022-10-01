@@ -2,12 +2,8 @@ pragma solidity ^0.8.0;
 import "./tokenData.sol";
 import "./interfaceERC721.sol";
 
-contract tokenTest is tokenData, ERC721, ERC165 {
+contract ERC721Contract is tokenData, ERC721, ERC165 {
     
-
-    function getName() public pure returns (string memory){
-        return "tokenTest";
-    }
 
     function balanceOf(address _owner) public view virtual override returns (uint256){
         return tokenBalance[_owner];
@@ -22,8 +18,6 @@ contract tokenTest is tokenData, ERC721, ERC165 {
     function safeTransferFrom(address _from, address _to, uint256 _tokenId) public virtual payable override {
         safeTransferFrom(_from, _to, _tokenId, "");
     }
-
-    
 
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes memory _data) public virtual payable override {
         require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
@@ -129,16 +123,6 @@ contract tokenTest is tokenData, ERC721, ERC165 {
         emit Transfer(address(0), to, tokenId);
     } 
 
-    function resetTokens(address to) public {
-        for (uint i= tokenList.length; i>0; i--){
-            tokenList.pop();
-            delete tokenURIs[i];
-            delete tokenOwner[i];
-        }
-        tokenBalance[to] =0 ;
-        delete tokenCollection[to];
-    }
-
     function getURIs(address owner) public view returns(string memory){
         string memory uri="";
         for (uint i = 1; i <= tokenList.length; i++) {
@@ -158,37 +142,4 @@ contract tokenTest is tokenData, ERC721, ERC165 {
         return tokenList.length;
     }
 
-    
-
-    /*function _checkOnERC721Received(address from, address to, uint256 tokenId, bytes memory _data) public view returns (bool)
-    {
-        ERC721TokenReceiver receiver = ERC721TokenReceiver(to);
-        require(receiver.onERC721Received(msg.sender,from,tokenId,_data)== bytes4(keccak256("onERC721Received(address,address,uint256,bytes)")));
-        }
-        if (to.isContract()) {
-            try ERC721TokenReceiver(to).onERC721Received(msg.sender, from, tokenId, _data) returns (bytes4 retval) {
-                return retval == ERC721TokenReceiver(to).onERC721Received.selector;
-            } catch (bytes memory reason) {
-                if (reason.length == 0) {
-                    revert("ERC721: transfer to non ERC721Receiver implementer");
-                } else {
-                    // solhint-disable-next-line no-inline-assembly
-                    assembly {
-                        revert(add(32, reason), mload(reason))
-                    }
-                }
-            }
-        } else {
-            return true;
-        } */
-    
-/*
-    library Address {
-        function isContract(address account) internal view returns (bool) {
-            uint256 size;
-            assembly { size := extcodesize(account) }
-            return size > 0;
-        }
-        
-    }*/
 }
