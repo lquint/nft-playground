@@ -22,14 +22,15 @@ const PlaygroundTable = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner();
             const userAddress=await signer.getAddress()
-            const ERC721Address=""
+            const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
             const ERC721ABI=[
                 "function getTokenID() public view returns (uint256)",
                 "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
-                "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public virtual payable override",
-                "function ownerOf(uint256 _tokenId) public view virtual override returns (address)"
+                "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable ",
+                "function ownerOf(uint256 _tokenId) public view  returns (address)"
               ]
             const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
+            console.log(await ERC721Contract.getTokenID())
             //set up display with metamask datas
             const contractBar=document.getElementById("contractBar")
             console.log(contractBar.innerHTML)
