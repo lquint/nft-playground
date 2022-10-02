@@ -1,18 +1,97 @@
 import Image from "next/image"
-import shapelessNFT from "../public/nft/shapelessNFT.png"
+import dummyNFT from "../public/nft/img/dummyNFT.png"
 import React from "react";
 import Script from 'next/script'
 
 
 const PlaygroundTable = () => {
-        ////////////////////////
-        /// Utility functions ///
-        ///////////////////////
-        function myFunction() {     
-            console.log(userAddress.innerText)     
-             // Copy the text inside the text field
-            navigator.clipboard.writeText(userAddress.innerText);
-          }
+    ////////////////////////
+    /// Utility functions ///
+    ///////////////////////
+    function ClipboardCopy() {     
+        console.log(userAddress.innerText)     
+            // Copy the text inside the text field
+        navigator.clipboard.writeText(userAddress.innerText);
+    }
+
+    async function mintDummyNFT(tokenId){
+        await provider.send("eth_requestAccounts", []);
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner();
+        const userAddress=await signer.getAddress()
+        const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+        const ERC721ABI=[
+            "function getTokenID() public view returns (uint256)",
+            "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
+            "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable ",
+            "function ownerOf(uint256 _tokenId) public view  returns (address)",
+            "function getURIs(address owner) public view returns(string memory)"
+        ]
+        const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
+                try {
+                    var tokenURI='nft/metadata/dummyNFT.json'
+                    const tx =  ERC721Contract.mintToken(userAddress,tokenURI)
+                    console.log(`Transaction hash: ${tx.hash}`);
+                    console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
+                    console.log(`Gas used: ${receipt.gasUsed.toString()}`);
+                    }catch (err){
+                        console.log(err)
+                        return err
+                    }
+    }
+
+
+        //  DISPLAY ELEMENTS //
+    //displays NFTs as card elements (note : add scrollable, max height etc ..)
+    async function setTokenDisplay(){
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        const signer = provider.getSigner();
+        const userAddress=await signer.getAddress()
+        const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+        const ERC721ABI=[
+            "function getTokenID() public view returns (uint256)",
+            "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
+            "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable ",
+            "function ownerOf(uint256 _tokenId) public view  returns (address)",
+            "function getURIs(address owner) public view returns(string memory)"
+        ]
+        const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
+
+        var nftList=""
+        const uriList= await ERC721Contract.getURIs(userAddress)
+        console.log("haaa"+uriList)
+        //look through all our token to check if there are favorites
+        for (let i=0;i< uriList.length; i++){
+            nftList=nftList+`
+            <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
+                <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
+                    <Image
+                        objectFit='cover'
+                        src={dummyNFT}
+                        alt='dummy nft'
+                        layout='fill'
+                        priority
+                        />
+                </div>    
+                <div className="mx-auto">
+                    <p className="font-bold text-center text-slate-50">Dummy NFT</p>
+                    <p className="text-center text-slate-500">No particular use</p>
+                </div>
+                <div className="px-6 pt-2 pb-2">
+                        <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
+                    </div>
+                <div className="flex flex-row mx-auto mt-auto gap-x-3">
+                <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                Transfer
+                </button>
+                <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                Burn
+                </button>
+                </div>
+            </div>
+            `
+        }
+    }
 
     // Verify and alert if user is connected to Metamask
     async function isConnected() {
@@ -27,7 +106,8 @@ const PlaygroundTable = () => {
                 "function getTokenID() public view returns (uint256)",
                 "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
                 "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable ",
-                "function ownerOf(uint256 _tokenId) public view  returns (address)"
+                "function ownerOf(uint256 _tokenId) public view  returns (address)",
+                "function getURIs(address owner) public view returns(string memory)"
               ]
             const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
             console.log(await ERC721Contract.getTokenID())
@@ -51,7 +131,8 @@ const PlaygroundTable = () => {
                     </button>
                 </div>
             `
-            document.getElementById("copyClipBoard").addEventListener("click",myFunction)
+            document.getElementById("copyClipBoard").addEventListener("click",ClipboardCopy)
+            setTokenDisplay()
             
         } else {
             Swal.fire('Please install and connect to Metamask to use the playground section')
