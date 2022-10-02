@@ -132,6 +132,7 @@ const PlaygroundTable = () => {
                 </div>
             `
             document.getElementById("copyClipBoard").addEventListener("click",ClipboardCopy)
+            document.getElementById("mintDummy").addEventListener("click",mintDummyNFT)
             setTokenDisplay()
             
         } else {
@@ -159,7 +160,7 @@ const PlaygroundTable = () => {
         <>
             <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10" >
                 <div id="contractBar" className="flex flex-row mt-auto ml-4 gap-x-3">
-                        <button className="w-6/12 px-4 py-2 my-auto mt-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800" onClick={mintToken}>
+                        <button id="mintDummy" className="w-6/12 px-4 py-2 my-auto mt-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800" onClick={mintToken}>
                         Mint
                         </button>
                         <button className="w-6/12 px-4 py-2 my-auto mt-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800">
