@@ -8,15 +8,15 @@ const PlaygroundTable = () => {
     ////////////////////////
     /// Utility functions ///
     ///////////////////////
-    function ClipboardCopy() {     
+    function clipboardCopy() {     
         console.log(userAddress.innerText)     
             // Copy the text inside the text field
         navigator.clipboard.writeText(userAddress.innerText);
     }
 
-    async function mintDummyNFT(tokenId){
-        await provider.send("eth_requestAccounts", []);
+    async function mintDummyNFT(){
         const provider = new ethers.providers.Web3Provider(window.ethereum)
+        //await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
         const userAddress=await signer.getAddress()
         const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
@@ -30,10 +30,12 @@ const PlaygroundTable = () => {
         const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
                 try {
                     var tokenURI='nft/metadata/dummyNFT.json'
-                    const tx =  ERC721Contract.mintToken(userAddress,tokenURI)
-                    console.log(`Transaction hash: ${tx.hash}`);
-                    console.log(`Transaction confirmed in block ${receipt.blockNumber}`);
-                    console.log(`Gas used: ${receipt.gasUsed.toString()}`);
+                    const tx =  await ERC721Contract.mintToken(userAddress,tokenURI)
+                    // Wait until the tx has been confirmed (default is 1 confirmation)
+                    const receipt = await tx.wait()
+                    // Receipt should now contain the logs
+                    console.log(receipt)
+                    
                     }catch (err){
                         console.log(err)
                         return err
@@ -53,44 +55,47 @@ const PlaygroundTable = () => {
             "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
             "function safeTransferFrom(address _from, address _to, uint256 _tokenId) public payable ",
             "function ownerOf(uint256 _tokenId) public view  returns (address)",
-            "function getURIs(address owner) public view returns(string memory)"
+            "function getURIList(address owner) public view returns(string[] memory)"
         ]
         const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
 
         var nftList=""
-        const uriList= await ERC721Contract.getURIs(userAddress)
+        const uriList= await ERC721Contract.getURIList(userAddress)
         console.log("haaa"+uriList)
+        console.log(uriList.length)
         //look through all our token to check if there are favorites
         for (let i=0;i< uriList.length; i++){
             nftList=nftList+`
-            <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
+            <div class="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
+                <div class="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
                     <Image
                         objectFit='cover'
-                        src={dummyNFT}
+                        src="nft/img/dummyNFT.png"
                         alt='dummy nft'
                         layout='fill'
                         priority
                         />
                 </div>    
-                <div className="mx-auto">
-                    <p className="font-bold text-center text-slate-50">Dummy NFT</p>
-                    <p className="text-center text-slate-500">No particular use</p>
+                <div class="mx-auto">
+                    <p class="font-bold text-center text-slate-50">Dummy NFT</p>
+                    <p class="text-center text-slate-500">No particular use</p>
                 </div>
-                <div className="px-6 pt-2 pb-2">
-                        <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
+                <div class="px-6 pt-2 pb-2">
+                        <span class="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
                     </div>
-                <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <div class="flex flex-row mx-auto mt-auto gap-x-3">
+                <button class="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Transfer
                 </button>
-                <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <button class="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Burn
                 </button>
                 </div>
             </div>
             `
         }
+        const nftDisplay=document.getElementById("nftDisplay")
+        nftDisplay.innerHTML=nftList
     }
 
     // Verify and alert if user is connected to Metamask
@@ -115,7 +120,7 @@ const PlaygroundTable = () => {
             const contractBar=document.getElementById("contractBar")
             console.log(contractBar.innerHTML)
             contractBar.innerHTML=`
-                <button class="my-auto w-6/12 px-4 py-2 mb-2 mt-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800" onClick={mintToken}>
+                <button id="mintDummy" class="my-auto w-6/12 px-4 py-2 mb-2 mt-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800">
                 Mint
                 </button>
                 <button class="my-auto w-6/12 px-4 py-2 mb-2 mt-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800">
@@ -131,7 +136,7 @@ const PlaygroundTable = () => {
                     </button>
                 </div>
             `
-            document.getElementById("copyClipBoard").addEventListener("click",ClipboardCopy)
+            document.getElementById("copyClipBoard").addEventListener("click",clipboardCopy)
             document.getElementById("mintDummy").addEventListener("click",mintDummyNFT)
             setTokenDisplay()
             
@@ -172,189 +177,7 @@ const PlaygroundTable = () => {
                 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" />
                 <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
             type="application/javascript"></script>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                <div className="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
-                    <div className="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
-                        <Image
-                            objectFit='cover'
-                            src={shapelessNFT}
-                            alt='shapeless nft'
-                            layout='fill'
-                            priority
-                            />
-                    </div>    
-                    <div className="mx-auto">
-                        <p className="font-bold text-center text-slate-50">Shapeless NFT</p>
-                        <p className="text-center text-slate-500">No particular use</p>
-                    </div>
-                    <div className="px-6 pt-2 pb-2">
-                            <span className="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-200 rounded-full">ERC-721 Token</span>
-                        </div>
-                    <div className="flex flex-row mx-auto mt-auto gap-x-3">
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Transfer
-                    </button>
-                    <button className="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
-                    Burn
-                    </button>
-                    </div>
-                </div>
-                </div>
+            </div>
             </>
      );
 }
