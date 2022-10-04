@@ -49,7 +49,7 @@ const PlaygroundTable = () => {
             // Wait until the tx has been confirmed (default is 1 confirmation)
             const receipt = await tx.wait()
             button.disabled=false
-            button.innerHTML="Mint"
+            button.innerHTML="Mint Dummy NFT"
             // Receipt should now contain the logs
             console.log(receipt)
             setTokenDisplay()
