@@ -51,6 +51,15 @@ contract ERC721Contract is tokenData, ERC721, ERC165 {
         delete array[array.length-1];
     }
 
+    function burn(uint256 tokenId) public {
+    require(_isApprovedOrOwner(msg.sender, tokenId));
+    _burn(ownerOf(tokenId), tokenId);
+    }
+
+    function _burn(address owner, uint256 tokenId) internal {
+        _transfer(owner,address(0),tokenId);
+    }
+
     function _transfer(address from, address to, uint256 tokenId) internal virtual {
         
         require(ownerOf(tokenId) == from, "ERC721: transfer of token that is not own");
