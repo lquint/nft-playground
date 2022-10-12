@@ -151,4 +151,34 @@ contract ERC721Contract is tokenData, ERC721, ERC165 {
         return tokenList.length;
     }
 
+    /// @notice Returns a list of all token IDs assigned to an address.
+    /// @param _owner The owner whose tokens we are interested in.
+    /// @dev This method MUST NEVER be called by smart contract code. First, it's fairly
+    ///  expensive 
+    function tokensOfOwner(address _owner) external view returns(uint256[] memory ownerTokens) {
+        uint256 tokenCount = balanceOf(_owner);
+
+        if (tokenCount == 0) {
+            // Return an empty array
+            return new uint256[](0);
+        } else {
+            uint256[] memory result = new uint256[](tokenCount);
+            uint256 maxId = getTokenID();
+            uint256 resultIndex = 0;
+
+            // We count on the fact that all cats have IDs starting at 1 and increasing
+            // sequentially up to the totalCat count.
+            uint256 id;
+
+            for (id = 1; id <= maxId; id++) {
+                if (tokenOwner[id] == _owner) {
+                    result[resultIndex] = id;
+                    resultIndex++;
+                }
+            }
+
+            return result;
+        }
+    }
+
 }
