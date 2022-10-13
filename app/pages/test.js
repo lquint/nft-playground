@@ -30,19 +30,14 @@ const Test = () => {
                     <div className="flex flex-row mx-auto mt-auto gap-x-3">
                     <button className="relative flex items-center group justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white transition duration-300 ease-in-out delay-150 rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-indigo-500">
                     Transfer
-                        <button className="absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</button>
+                        <div className="py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</div>
                     </button>
                     <button className="relative flex items-center justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full group bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 ">
                     Burn
-                        <button className="absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Burn</button>
+                        <div className="py-2  absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Burn</div>
                     </button>
                     </div>
                 </div>
-
-            <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" />
-            <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
-            type="application/javascript"></script>
-            <script src="https://cdn.tailwindcss.com"></script>
         </div>
         </>
         
