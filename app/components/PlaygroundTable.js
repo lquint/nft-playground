@@ -170,11 +170,14 @@ const PlaygroundTable = () => {
                         <div class="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-400 rounded-full">ERC-721 Token</div>
                 </div>
                 <div class="flex flex-row mx-auto mt-auto gap-x-3">
-                <button class="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <button class="relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Transfer
+                <div class="py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</div>
+
                 </button>
-                <button class="w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <button class="relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Burn
+                <div class="py-2  absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Burn</div>
                 </button>
                 </div>
             </div>
