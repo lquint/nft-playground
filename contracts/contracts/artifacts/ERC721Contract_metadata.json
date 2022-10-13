@@ -121,6 +121,19 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
+						"name": "tokenId",
+						"type": "uint256"
+					}
+				],
+				"name": "burn",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
 						"name": "_tokenId",
 						"type": "uint256"
 					}
@@ -364,6 +377,25 @@
 				"inputs": [
 					{
 						"internalType": "address",
+						"name": "_owner",
+						"type": "address"
+					}
+				],
+				"name": "tokensOfOwner",
+				"outputs": [
+					{
+						"internalType": "uint256[]",
+						"name": "ownerTokens",
+						"type": "uint256[]"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
 						"name": "_from",
 						"type": "address"
 					},
@@ -438,6 +470,12 @@
 						"_operator": "Address to add to the set of authorized operators"
 					}
 				},
+				"tokensOfOwner(address)": {
+					"details": "This method MUST NEVER be called by smart contract code. First, it's fairly  expensive ",
+					"params": {
+						"_owner": "The owner whose tokens we are interested in."
+					}
+				},
 				"transferFrom(address,address,uint256)": {
 					"details": "Throws unless `msg.sender` is the current owner, an authorized  operator, or the approved address for this NFT. Throws if `_from` is  not the current owner. Throws if `_to` is the zero address. Throws if  `_tokenId` is not a valid NFT.",
 					"params": {
@@ -470,6 +508,9 @@
 				"setApprovalForAll(address,bool)": {
 					"notice": "Enable or disable approval for a third party (\"operator\") to manage  all of `msg.sender`'s assets"
 				},
+				"tokensOfOwner(address)": {
+					"notice": "Returns a list of all token IDs assigned to an address."
+				},
 				"transferFrom(address,address,uint256)": {
 					"notice": "Transfer ownership of an NFT -- THE CALLER IS RESPONSIBLE  TO CONFIRM THAT `_to` IS CAPABLE OF RECEIVING NFTS OR ELSE  THEY MAY BE PERMANENTLY LOST"
 				}
@@ -494,25 +535,25 @@
 	},
 	"sources": {
 		"contracts/ERC721Contract.sol": {
-			"keccak256": "0xbba28e0332479c539a699bfe94884449ce5d43e196f938c5136d84cf8ab086d9",
+			"keccak256": "0x2f8526d70d99f6f0c6e02d9a69aa42822d8edc48cf7617e7261c017d0571bbc5",
 			"urls": [
-				"bzz-raw://f39c728392b137f106b48a2355c3bf6ae9eb3d7e0d93a79925499be0abde5d9e",
-				"dweb:/ipfs/QmWP9d7mi1Vv8TXZfRT6kwpmQpEMHHRUjqB2UjDv72PaFJ"
+				"bzz-raw://18339d8441b6d102eaadbbd6223244f1a5fe766ec161e7a048946232c29c08a0",
+				"dweb:/ipfs/QmUoSbztL8TvLVEbDSkkaudgmEJx1uFNRMSwF1SdHVe7Lj"
 			]
 		},
 		"contracts/interfaceERC721.sol": {
-			"keccak256": "0x415c3d57903aa05e65c8fedda4bd0861bdeca2cd91bbd8144f1d9af054cf5f3c",
+			"keccak256": "0xd17a3d9059f4312b234c18e487b838e8aabd2f05b9408f24bfa230170522335a",
 			"urls": [
-				"bzz-raw://504930f3e45c1ba263aeadea338a921aa13956a1f5d0d41c8fc6c1e9d1e1dd11",
-				"dweb:/ipfs/QmRHS4c5ph8FxjoZXLDjYugSEGbY5kwvD1p4t5VngBrH53"
+				"bzz-raw://cee0f4b9d4149a42f043f78154f98aaf50ce7e5d7ebf16c8f5ddb7e1b069a5c3",
+				"dweb:/ipfs/QmQvmBTHXS5s7MF4fesLn4nm137QHTVsnxDDMr1JR44Vd5"
 			]
 		},
 		"contracts/tokenData.sol": {
-			"keccak256": "0x16c9eff1f56fe7c3904c6f9a0ceced41f1315e4d0418bdaafe8f6ca97676b123",
+			"keccak256": "0x19eca0a7b93c3cd944b5f5a20e2c46a6ab35707a8fdeebb8b9be7886147fe770",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://c770fa3f413d99a7ba2a83d521ade652c63bb292961f210c721d6a42bfca845a",
-				"dweb:/ipfs/QmPVnvygqYAdwLWz7CRPtAQUW83F18GNq1ziccw2VJSCsN"
+				"bzz-raw://7496cdf77e9d005b2cbd003d0dbb23d59f28e454f0eebb995f495091a1a9d9d9",
+				"dweb:/ipfs/QmeXbdNhHBU4SY4S8B1uzr6fGFaMfg1G1MUHJMYBar9Yo9"
 			]
 		}
 	},
