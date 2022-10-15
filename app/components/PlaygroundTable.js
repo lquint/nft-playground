@@ -8,8 +8,7 @@ const PlaygroundTable = () => {
     ////////////////////////
     /// Utility functions ///
     ///////////////////////
-    function clipboardCopy() {     
-        console.log(userAddress.innerText)     
+    function clipboardCopy() {
             // Copy the text inside the text field
         navigator.clipboard.writeText(userAddress.innerText);
     }
@@ -21,7 +20,7 @@ const PlaygroundTable = () => {
 
     async function transferNFT(tokenID){
         Swal.fire({
-            title: 'Submit the address youw want to transfer your token',
+            title: 'Submit the address you want to transfer your token (ID : '+tokenID+" )",
             input: 'text',
             inputAttributes: {
               autocapitalize: 'off'
@@ -29,8 +28,8 @@ const PlaygroundTable = () => {
             showCancelButton: true,
             confirmButtonText: 'Transfer',
             showLoaderOnConfirm: true,
-            preConfirm: (receiverAddress) => {
-              proceedTransfer(receiverAddress,tokenID)
+            preConfirm: async (receiverAddress) => {
+              await proceedTransfer(receiverAddress,tokenID)
             },
             allowOutsideClick: () => !Swal.isLoading()
           }).then((result) => {
@@ -40,6 +39,10 @@ const PlaygroundTable = () => {
                     'Your token has been transfered.',
                     'success'
                   )
+            } else {
+                'Not transfered ! :(',
+                'Your transaction has failed.',
+                'fail'
             }
           })
     }
@@ -49,7 +52,7 @@ const PlaygroundTable = () => {
         //await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
         const userAddress=await signer.getAddress()
-        const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+        const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
         const ERC721ABI=[
             "function getTokenID() public view returns (uint256)",
             "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
@@ -90,7 +93,7 @@ const PlaygroundTable = () => {
         //await provider.send("eth_requestAccounts", []);
         const signer = provider.getSigner();
         const userAddress=await signer.getAddress()
-        const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+        const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
         const ERC721ABI=[
             "function getTokenID() public view returns (uint256)",
             "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
@@ -100,22 +103,9 @@ const PlaygroundTable = () => {
         ]
         const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
         try {
-            const tx =  await ERC721Contract.safeTransferFrom(userAddress,to,[])
-            const button=document.getElementById("mintDummy")
-            button.disabled=true
-            button.innerHTML=`
-            <div role="status">
-    <svg class="inline mr-2 w-6 h-6 text-gray-200 animate-spin dark:text-gray-600 fill-green-500" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
-        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
-    </svg>
-    Processing...
-</div>
-            `
+            const tx =  await ERC721Contract.safeTransferFrom(userAddress,to,tokenID,[])
             // Wait until the tx has been confirmed (default is 1 confirmation)
             const receipt = await tx.wait()
-            button.disabled=false
-            button.innerHTML="Mint Dummy NFT"
             // Receipt should now contain the logs
             console.log(receipt)
             setTokenDisplay()
@@ -132,7 +122,7 @@ const PlaygroundTable = () => {
         const provider = new ethers.providers.Web3Provider(window.ethereum)
         const signer = provider.getSigner();
         const userAddress=await signer.getAddress()
-        const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+        const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
         const ERC721ABI=[
             "function getTokenID() public view returns (uint256)",
             "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
@@ -144,10 +134,8 @@ const PlaygroundTable = () => {
         const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
 
         var nftList=""
-        //const tokenIDList= await ERC721Contract.tokensOfOwner(userAddress)
-        const uriList= await ERC721Contract.getURIList(userAddress)
-        console.log("haaa"+uriList)
-        console.log(uriList.length)
+        const tokenIDList= await ERC721Contract.tokensOfOwner(userAddress,{gasLimit:3000000})
+        const uriList= await ERC721Contract.getURIList(userAddress,{gasLimit:3000000})
         //look through all our token to check if there are favorites
         for (let i=0;i< uriList.length; i++){
             nftList=nftList+`
@@ -166,13 +154,13 @@ const PlaygroundTable = () => {
                     <p class="text-center text-slate-500">No particular use</p>
                 </div>
                 <div class="flex flex-row flex-nowrap justify-start px-6 pt-3 pb-1">
-                        <div class="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full">ID : 23</div>
+                        <div class="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-100 rounded-full" value=23>ID : ${tokenIDList[i]}</div>
                         <div class="inline-block px-3 py-1 mb-2 mr-2 text-xs font-semibold text-gray-700 bg-gray-400 rounded-full">ERC-721 Token</div>
                 </div>
                 <div class="flex flex-row mx-auto mt-auto gap-x-3">
-                <button class="relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <button class="transferButtonGradient relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Transfer
-                <div class="py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</div>
+                <div value=5 class="transferButton py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</div>
 
                 </button>
                 <button class="relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
@@ -185,7 +173,19 @@ const PlaygroundTable = () => {
         }
         const nftDisplay=document.getElementById("nftDisplay")
         nftDisplay.innerHTML=nftList
-        //document.getElementById("transferNFT"+i).addEventListener("click",transferNFT())
+        const transferButtons=document.getElementsByClassName("transferButton")
+        const transferButtonGradient=document.getElementsByClassName("transferButtonGradient")
+
+        for(let i=0;i<transferButtons.length;i++){
+            transferButtons[i].addEventListener("click",function(){
+                transferNFT(tokenIDList[i]);
+            },"false")
+        }
+        for(let i=0;i<transferButtonGradient.length;i++){
+            transferButtonGradient[i].addEventListener("click",function(){
+                transferNFT(tokenIDList[i]);
+            },"false")
+        }
     }
 
     // Verify and alert if user is connected to Metamask
@@ -196,7 +196,7 @@ const PlaygroundTable = () => {
             const provider = new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner();
             const userAddress=await signer.getAddress()
-            const ERC721Address="0x75636eb6b3581ef91357eceb976906ec8faca578"
+            const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
             const ERC721ABI=[
                 "function getTokenID() public view returns (uint256)",
                 "function mintToken(address to, string memory tokenURI) external returns (uint tokenId)",
@@ -205,10 +205,8 @@ const PlaygroundTable = () => {
                 "function getURIs(address owner) public view returns(string memory)"
               ]
             const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
-            console.log(await ERC721Contract.getTokenID())
             //set up display with metamask datas
             const contractBar=document.getElementById("contractBar")
-            console.log(contractBar.innerHTML)
             contractBar.innerHTML=`
                 <button id="mintDummy" class="my-auto  px-4 py-2 mb-2 mt-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700 hover:text-neutral-800">
                 Mint Dummy NFT
@@ -236,10 +234,6 @@ const PlaygroundTable = () => {
                 </div>
             `
         }
-     }
-
-     async function mintToken(){
-        console.log("Minting token braah")
      }
 
 
