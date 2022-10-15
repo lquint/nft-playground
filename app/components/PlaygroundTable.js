@@ -33,6 +33,7 @@ const PlaygroundTable = () => {
             },
             allowOutsideClick: () => !Swal.isLoading()
           }).then((result) => {
+            console.log(result)
             if (result.isConfirmed) {
                 Swal.fire(
                     'Transfered!',
@@ -43,6 +44,33 @@ const PlaygroundTable = () => {
                 'Not transfered ! :(',
                 'Your transaction has failed.',
                 'fail'
+            }
+          })
+    }
+
+    async function burnNFT(tokenID){
+        let txHash
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            showLoaderOnConfirm: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, burn it! 🔥',
+            preConfirm: async (receiverAddress) => {
+                txHash=await proceedBurn(receiverAddress,tokenID)
+            },
+          }).then((result) => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    title: 'Burned',
+                    icon: 'success',
+                    html:
+                      'Your token has been burned, ' +
+                      `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash} target="_blank" rel="noopener noreferrer"">here</a></u>`
+                  })
             }
           })
     }
@@ -109,6 +137,32 @@ const PlaygroundTable = () => {
             // Receipt should now contain the logs
             console.log(receipt)
             setTokenDisplay()
+            return receipt.transactionHash
+            
+            }catch (err){
+                console.log(err)
+                return err
+            }
+    }
+
+    async function proceedBurn(to,tokenID){
+        const provider = new ethers.providers.Web3Provider(window.ethereum)
+        //await provider.send("eth_requestAccounts", []);
+        const signer = provider.getSigner();
+        const userAddress=await signer.getAddress()
+        const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
+        const ERC721ABI=[
+            "function burn(uint256 tokenId) public"
+        ]
+        const ERC721Contract= new ethers.Contract(ERC721Address,ERC721ABI,signer)
+        try {
+            const tx =  await ERC721Contract.burn(tokenID)
+            // Wait until the tx has been confirmed (default is 1 confirmation)
+            const receipt = await tx.wait()
+            // Receipt should now contain the logs
+            console.log(receipt)
+            setTokenDisplay()
+            return receipt.transactionHash
             
             }catch (err){
                 console.log(err)
@@ -137,7 +191,8 @@ const PlaygroundTable = () => {
         const tokenIDList= await ERC721Contract.tokensOfOwner(userAddress,{gasLimit:3000000})
         const uriList= await ERC721Contract.getURIList(userAddress,{gasLimit:3000000})
         //look through all our token to check if there are favorites
-        for (let i=0;i< uriList.length; i++){
+        console.log(uriList)
+        for (let i=0;i< tokenIDList.length; i++){
             nftList=nftList+`
             <div class="flex flex-col transition ease-in-out delay-150 border border-black rounded-3xl bg-slate-900 basis-1/4 h-2/5">
                 <div class="relative mx-auto mt-2 overflow-hidden rounded-md w-36 h-36">
@@ -163,9 +218,9 @@ const PlaygroundTable = () => {
                 <div value=5 class="transferButton py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Transfer</div>
 
                 </button>
-                <button class="relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
+                <button class="burnButtonGradient relative flex items-center justify-center group w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-blue-700">
                 Burn
-                <div class="py-2  absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Burn</div>
+                <div class="burnButton py-2  absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">Burn</div>
                 </button>
                 </div>
             </div>
@@ -175,17 +230,26 @@ const PlaygroundTable = () => {
         nftDisplay.innerHTML=nftList
         const transferButtons=document.getElementsByClassName("transferButton")
         const transferButtonGradient=document.getElementsByClassName("transferButtonGradient")
+        const burnButtons=document.getElementsByClassName("burnButton")
+        const burnButtonGradient=document.getElementsByClassName("burnButtonGradient")
 
         for(let i=0;i<transferButtons.length;i++){
             transferButtons[i].addEventListener("click",function(){
                 transferNFT(tokenIDList[i]);
             },"false")
-        }
-        for(let i=0;i<transferButtonGradient.length;i++){
             transferButtonGradient[i].addEventListener("click",function(){
                 transferNFT(tokenIDList[i]);
             },"false")
+            burnButtons[i].addEventListener("click",function(){
+                burnNFT(tokenIDList[i]);
+            },"false")
+            burnButtonGradient[i].addEventListener("click",function(){
+                burnNFT(tokenIDList[i]);
+            },"false")
+
         }
+
+
     }
 
     // Verify and alert if user is connected to Metamask
