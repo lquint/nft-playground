@@ -19,6 +19,7 @@ const PlaygroundTable = () => {
     }
 
     async function transferNFT(tokenID){
+        let txHash
         Swal.fire({
             title: 'Submit the address you want to transfer your token (ID : '+tokenID+" )",
             input: 'text',
@@ -29,21 +30,17 @@ const PlaygroundTable = () => {
             confirmButtonText: 'Transfer',
             showLoaderOnConfirm: true,
             preConfirm: async (receiverAddress) => {
-              await proceedTransfer(receiverAddress,tokenID)
+                txHash =await proceedTransfer(receiverAddress,tokenID)
             },
-            allowOutsideClick: () => !Swal.isLoading()
           }).then((result) => {
-            console.log(result)
             if (result.isConfirmed) {
-                Swal.fire(
-                    'Transfered!',
-                    'Your token has been transfered.',
-                    'success'
-                  )
-            } else {
-                'Not transfered ! :(',
-                'Your transaction has failed.',
-                'fail'
+                Swal.fire({
+                    title: 'Transfered',
+                    icon: 'success',
+                    html:
+                      'Your token has been Transfered, ' +
+                      `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank" rel="noopener noreferrer">here</a></u>`
+                  })
             }
           })
     }
@@ -69,7 +66,7 @@ const PlaygroundTable = () => {
                     icon: 'success',
                     html:
                       'Your token has been burned, ' +
-                      `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash} target="_blank" rel="noopener noreferrer"">here</a></u>`
+                      `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank" rel="noopener noreferrer">here</a></u>`
                   })
             }
           })
