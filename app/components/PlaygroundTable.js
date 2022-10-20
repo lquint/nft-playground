@@ -2,6 +2,7 @@ import Image from "next/image"
 import dummyNFT from "../public/nft/img/dummyNFT.png"
 import React from "react";
 import Script from 'next/script'
+import Swal from 'sweetalert2'
 
 
 const PlaygroundTable = () => {
