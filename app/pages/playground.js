@@ -1,4 +1,4 @@
-import PlaygroundTable from '../components/playgroundTable';
+import PlaygroundTable from '../components/PlaygroundTable';
 import React from "react";
 
 
