@@ -3,6 +3,7 @@ import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useSession, signOut} from 'next-auth/react';
+import Link from 'next/link';
 
 const user = {
   name: 'Tom Cook',
@@ -133,7 +134,7 @@ const Navbar = () => {
                         
 
 
-                        <a
+                        <Link
                             key="signIn"
                             href='/api/auth/signin'
                             className={classNames('text-gray-300 hover:bg-gray-700 hover:text-white',
@@ -141,7 +142,7 @@ const Navbar = () => {
                             )}
                           >
                             Sign In
-                          </a>
+                          </Link>
                         
                       )}
                     </div>
