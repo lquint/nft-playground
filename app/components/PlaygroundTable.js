@@ -310,10 +310,10 @@ const PlaygroundTable = () => {
                     </div>
             </div>
             <div id="nftDisplay" className="container flex flex-row flex-wrap justify-center h-full mx-auto overflow-y-auto bg-sky-900 gap-x-10 gap-y-10" >
-                <script src="//cdn.jsdelivr.net/npm/sweetalert2@11" />
-                <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
-            type="application/javascript"></script>
-            <script src="https://cdn.tailwindcss.com"></script>
+                <Script src="//cdn.jsdelivr.net/npm/sweetalert2@11" />
+                <Script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+            type="application/javascript"></Script>
+            <Script src="https://cdn.tailwindcss.com"></Script>
             </div>
             </>
      );
