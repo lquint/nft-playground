@@ -258,13 +258,14 @@ const PlaygroundTable = () => {
         //console.log(accounts)
         // this returns the provider, or null if it wasn't detected
         const accounts= await window.ethereum.request({method: 'eth_requestAccounts'});
-console.log(accounts)
+        console.log(accounts)
         const provider = await detectEthereumProvider();
         console.log(provider)
         if (provider) {
         //if (accounts.length) {
             Swal.fire('Great ! You are connected with your Metamask Wallet !')
-            //const provider = new ethers.providers.Web3Provider(window.ethereum)
+            //const provider = 
+            console.log(await new ethers.providers.Web3Provider(window.ethereum))
             const signer = provider.getSigner();
             const userAddress=await signer.getAddress()
             const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
