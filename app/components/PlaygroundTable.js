@@ -257,8 +257,10 @@ const PlaygroundTable = () => {
         //const accounts = await ethereum.request({method: 'eth_accounts'});
         //console.log(accounts)
         // this returns the provider, or null if it wasn't detected
+        const accounts= await window.ethereum.request({method: 'eth_requestAccounts'});
+console.log(accounts)
         const provider = await detectEthereumProvider();
-
+        console.log(provider)
         if (provider) {
         //if (accounts.length) {
             Swal.fire('Great ! You are connected with your Metamask Wallet !')
