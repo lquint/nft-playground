@@ -252,7 +252,8 @@ const PlaygroundTable = () => {
 
     // Verify and alert if user is connected to Metamask
     async function isConnected() {
-        const accounts = await ethereum.request({method: 'eth_accounts'});       
+        const accounts = await ethereum.request({method: 'eth_accounts'});
+        console.log(accounts)       
         if (accounts.length) {
             Swal.fire('Great ! You are connected with your Metamask Wallet !')
             const provider = new ethers.providers.Web3Provider(window.ethereum)
