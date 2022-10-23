@@ -4,6 +4,7 @@ import React from "react";
 import Script from 'next/script'
 import Swal from 'sweetalert2'
 import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from "ethers";
 
 
 const PlaygroundTable = () => {
