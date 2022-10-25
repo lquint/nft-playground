@@ -2,6 +2,9 @@ import Image from "next/image"
 import dummyNFT from "../public/nft/img/dummyNFT.png"
 import React from "react";
 import Script from 'next/script'
+import Swal from 'sweetalert2'
+import detectEthereumProvider from '@metamask/detect-provider';
+import { ethers } from "ethers";
 
 
 const PlaygroundTable = () => {
@@ -251,10 +254,18 @@ const PlaygroundTable = () => {
 
     // Verify and alert if user is connected to Metamask
     async function isConnected() {
-        const accounts = await ethereum.request({method: 'eth_accounts'});       
-        if (accounts.length) {
+        //const accounts = await ethereum.request({method: 'eth_accounts'});
+        //console.log(accounts)
+        // this returns the provider, or null if it wasn't detected
+        const accounts= await window.ethereum.request({method: 'eth_requestAccounts'});
+        console.log(accounts)
+        const provider = await detectEthereumProvider();
+        console.log(provider)
+        if (provider) {
+        //if (accounts.length) {
             Swal.fire('Great ! You are connected with your Metamask Wallet !')
-            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            //const provider = 
+            provider = await new ethers.providers.Web3Provider(window.ethereum)
             const signer = provider.getSigner();
             const userAddress=await signer.getAddress()
             const ERC721Address="0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad"
