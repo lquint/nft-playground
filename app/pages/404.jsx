@@ -1,18 +1,8 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
 import sadge from '../public/gifs/sadge.gif';
 
-const NotFound = () => {
-  const router = useRouter();
-  /*
-    useEffect(() => {
-        setTimeout(()=> {
-            router.push('/');
-        }, 3000)
-    },[])
-    */
+const NotFound = function notFound() {
   return (
     <div className="not-found">
       <div className="flex flex-col items-center justify-center w-full space-y-4 page-standard lg-flex-row">
@@ -21,7 +11,6 @@ const NotFound = () => {
             objectFit="cover"
             src={sadge}
             alt="Gif of Sadge"
-            //sizes="1vw"
             layout="fill"
             priority
           />
@@ -31,7 +20,7 @@ const NotFound = () => {
         <p>
           Go back to the{' '}
           <Link href="/">
-            <a>Homepage</a>
+            Homepage
           </Link>
         </p>
       </div>
