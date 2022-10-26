@@ -1,10 +1,10 @@
-import styles from '../styles/Home.module.css';
+import React from 'react';
 
-export default function Home() {
+const About = function about() {
   return (
     <div>
-      <h1 className={styles.title}>Test</h1>
-      <p className={styles.text}>
+      <h1>About</h1>
+      <p>
         Lorem ipsum dolor sit amet. Eos maiores maxime ut voluptatibus officia
         et culpa nihil et dicta optio sit quos rerum et sequi excepturi cum quia
         voluptatem. Qui quia soluta sit nulla galisum At sint beatae eum
@@ -12,7 +12,7 @@ export default function Home() {
         dolorum Quis et fugit modi est cupiditate cumque cum quam eius. At
         tenetur neque id debitis dolorem qui nulla inventore 33 error veritatis!
       </p>
-      <p className={styles.text}>
+      <p>
         Lorem ipsum dolor sit amet. Eos maiores maxime ut voluptatibus officia
         et culpa nihil et dicta optio sit quos rerum et sequi excepturi cum quia
         voluptatem. Qui quia soluta sit nulla galisum At sint beatae eum
@@ -22,4 +22,6 @@ export default function Home() {
       </p>
     </div>
   );
-}
+};
+
+export default About;
