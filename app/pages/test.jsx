@@ -1,14 +1,14 @@
 import React from 'react';
 import Image from 'next/image';
 
-const Test = () => {
+const Test = function test() {
   return (
     <>
       <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10">
         <div
           id="contractBar"
           className="flex flex-row mt-auto ml-4 gap-x-3"
-        ></div>
+        />
       </div>
       <div
         id="nftDisplay"
@@ -37,15 +37,15 @@ const Test = () => {
             </div>
           </div>
           <div className="flex flex-row mx-auto mt-auto gap-x-3">
-            <button className="relative flex items-center group justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white transition duration-300 ease-in-out delay-150 rounded-full bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-indigo-500">
+            <button type='button' className="relative flex items-center justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white transition duration-300 ease-in-out delay-150 rounded-full group bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 hover:bg-indigo-500">
               Transfer
-              <div className="py-2 absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">
+              <div className="absolute w-0 h-0 py-2 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">
                 Transfer
               </div>
             </button>
-            <button className="relative flex items-center justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full group bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 ">
+            <button type='button' className="relative flex items-center justify-center w-6/12 px-4 py-2 mb-2 font-bold text-white rounded-full group bg-gradient-to-tr from-pink-500 via-red-500 to-yellow-500 ">
               Burn
-              <div className="py-2  absolute w-0 h-0 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">
+              <div className="absolute w-0 h-0 py-2 font-bold text-black transition-all duration-300 ease-in-out scale-0 rounded-full bg-orange-50 group-hover:scale-110 group-hover:w-full group-hover:h-full ">
                 Burn
               </div>
             </button>
