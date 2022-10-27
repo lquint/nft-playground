@@ -1,7 +1,8 @@
-import PlaygroundTable from '../components/PlaygroundTable';
 import React from 'react';
+import PlaygroundTable from '../components/PlaygroundTable';
 
-const Playground = () => {
+
+const Playground = function playground() {
   return (
     <div className="page-standard">
       <PlaygroundTable />
