@@ -1,8 +1,9 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { SessionProvider } from 'next-auth/react';
+import {PropTypes} from "prop-types";
 import Layout from '../components/Layout';
 import '../styles/globals.css';
 
-/* eslint-disable react/jsx-props-no-spreading */
 function MyApp({ session, Component, pageProps }) {
   return (
     <SessionProvider session={session}>
@@ -14,6 +15,6 @@ function MyApp({ session, Component, pageProps }) {
 }
 
 MyApp.propTypes = {
-  MyApp: MyApp.string.isRequired
+  MyApp: PropTypes.string.isRequired
 }
 export default MyApp;
