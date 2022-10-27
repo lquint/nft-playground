@@ -1,4 +1,5 @@
 import React from 'react';
+import {PropTypes} from "prop-types";
 import Footer from './footer';
 import Navbar from './navbar';
 
@@ -12,6 +13,6 @@ const Layout = function layout({ children }) {
   );
 };
 Layout.propTypes = {
-  children: Layout.string.isRequired
+  children: PropTypes.string.isRequired
 }
 export default Layout;
