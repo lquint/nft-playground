@@ -1,7 +1,8 @@
+import { SessionProvider } from 'next-auth/react';
 import Layout from '../components/Layout';
 import '../styles/globals.css';
-import { SessionProvider } from 'next-auth/react';
 
+/* eslint-disable react/jsx-props-no-spreading */
 function MyApp({ session, Component, pageProps }) {
   return (
     <SessionProvider session={session}>
@@ -12,4 +13,7 @@ function MyApp({ session, Component, pageProps }) {
   );
 }
 
+MyApp.propTypes = {
+  MyApp: MyApp.string.isRequired
+}
 export default MyApp;
