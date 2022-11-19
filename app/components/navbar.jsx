@@ -11,10 +11,8 @@ const user = {
   imageUrl: '',
 };
 const navigation = [
-  { name: 'Home', href: '/', current: false },
-  { name: 'Playground', href: '/playground', current: false },
+  { name: 'Playground', href: '/', current: false },
   { name: 'About', href: '/about', current: false },
-  { name: '404', href: '/404', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -48,7 +46,7 @@ const Navbar = function navbar() {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        src="/img/ethereum.png"
                         alt="Your Company"
                       />
                     </div>
@@ -137,12 +135,9 @@ const Navbar = function navbar() {
                         <Link
                           key="signIn"
                           href="/api/auth/signin"
-                          className={classNames(
-                            'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium'
-                          )}
+                          className="px-3 py-2 text-sm font-medium text-red-600 rounded-md"
                         >
-                          Sign In
+                          <a href="/api/auth/signin" className='px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white'>Sign In</a>
                         </Link>
                       )}
                     </div>
