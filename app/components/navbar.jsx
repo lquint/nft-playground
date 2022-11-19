@@ -11,10 +11,8 @@ const user = {
   imageUrl: '',
 };
 const navigation = [
-  { name: 'Home', href: '/', current: false },
-  { name: 'Playground', href: '/playground', current: false },
+  { name: 'Playground', href: '/', current: false },
   { name: 'About', href: '/about', current: false },
-  { name: '404', href: '/404', current: false },
 ];
 const userNavigation = [
   { name: 'Your Profile', href: '#' },
@@ -48,7 +46,7 @@ const Navbar = function navbar() {
                     <div className="flex-shrink-0">
                       <img
                         className="w-8 h-8"
-                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
+                        src="/img/ethereum.png"
                         alt="Your Company"
                       />
                     </div>
@@ -74,14 +72,6 @@ const Navbar = function navbar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="flex items-center ml-4 md:ml-6">
-                      <button
-                        type="button"
-                        className="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="w-6 h-6" aria-hidden="true" />
-                      </button>
-
                       {/* Profile dropdown */}
                       {session?.user && (
                         <Menu as="div" className="relative ml-3">
@@ -137,12 +127,9 @@ const Navbar = function navbar() {
                         <Link
                           key="signIn"
                           href="/api/auth/signin"
-                          className={classNames(
-                            'text-gray-300 hover:bg-gray-700 hover:text-white',
-                            'px-3 py-2 rounded-md text-sm font-medium'
-                          )}
+                          className="px-3 py-2 text-sm font-medium text-red-600 rounded-md"
                         >
-                          Sign In
+                          <a href="/api/auth/signin" className='px-3 py-2 text-sm font-medium rounded-md text-slate-300 hover:text-white'>Sign In</a>
                         </Link>
                       )}
                     </div>
