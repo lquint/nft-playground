@@ -72,14 +72,6 @@ const Navbar = function navbar() {
                   </div>
                   <div className="hidden md:block">
                     <div className="flex items-center ml-4 md:ml-6">
-                      <button
-                        type="button"
-                        className="p-1 text-gray-400 bg-gray-800 rounded-full hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                      >
-                        <span className="sr-only">View notifications</span>
-                        <BellIcon className="w-6 h-6" aria-hidden="true" />
-                      </button>
-
                       {/* Profile dropdown */}
                       {session?.user && (
                         <Menu as="div" className="relative ml-3">
