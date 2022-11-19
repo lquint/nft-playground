@@ -3,22 +3,9 @@ import React from 'react';
 const About = function about() {
   return (
     <div>
-      <h1>About</h1>
-      <p>
-        Lorem ipsum dolor sit amet. Eos maiores maxime ut voluptatibus officia
-        et culpa nihil et dicta optio sit quos rerum et sequi excepturi cum quia
-        voluptatem. Qui quia soluta sit nulla galisum At sint beatae eum
-        voluptates quia. Eos velit rerum laboriosam voluptas vero nobis At
-        dolorum Quis et fugit modi est cupiditate cumque cum quam eius. At
-        tenetur neque id debitis dolorem qui nulla inventore 33 error veritatis!
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet. Eos maiores maxime ut voluptatibus officia
-        et culpa nihil et dicta optio sit quos rerum et sequi excepturi cum quia
-        voluptatem. Qui quia soluta sit nulla galisum At sint beatae eum
-        voluptates quia. Eos velit rerum laboriosam voluptas vero nobis At
-        dolorum Quis et fugit modi est cupiditate cumque cum quam eius. At
-        tenetur neque id debitis dolorem qui nulla inventore 33 error veritatis!
+      <h1 className='text-2xl mt-7'>About</h1>
+      <p className='mt-5 text-lg'>
+        To get more details about this project you can check the github project <a className='underline' href='https://github.com/lquint/nftCenter'>here</a>
       </p>
     </div>
   );
