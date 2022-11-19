@@ -41,6 +41,8 @@ Project is: _in progress_
 ## Room for Improvement
 
 To do:
+- Check if the user is on the right network in order to avoid errors
+- Reload playground on Metamask account changed
 - MongoDB collection to store and display transactions made through the web app (and outside of the app ?)
 - More guidelines to get started on the app for beginners
 
@@ -48,5 +50,3 @@ To do:
 
 <!-- ## License -->
 <!-- This project is open source and available under the [... License](). -->
-
-<!-- You don't have to include all sections - just the one's relevant to your project -->
