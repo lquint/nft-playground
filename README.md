@@ -1,6 +1,6 @@
 # nft-playground
 > A playground where you can test basic nft functionnalities like minting, burning and transfering tokens.
-> Live demo [_here_](https://nft-playground-one.vercel.app/playground). 
+> Live demo [_here_](https://nft-playground-one.vercel.app). 
 
 ## Table of Contents
 * [General Info](#general-information)
