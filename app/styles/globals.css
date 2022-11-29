@@ -37,3 +37,14 @@ footer {
 .page-standard{
   height:81vh;
 }
+
+.playground{
+  width: 960px;
+}
+
+.page-table{
+  max-width:80vw;
+  width: 80vw;
+  margin: 0 auto;
+  display: block;
+}

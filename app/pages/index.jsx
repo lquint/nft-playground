@@ -3,7 +3,7 @@ import PlaygroundTable from '../components/PlaygroundTable';
 
 export default function Home() {
   return (
-    <div className="page-standard">
+    <div className="content page-standard">
       <PlaygroundTable />
     </div>
   );
