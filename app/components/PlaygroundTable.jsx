@@ -44,7 +44,7 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
-      const res = await fetch("http://localhost:3000/api/transactions", {
+      const res = await fetch(`${process.env.BASE_URL}/api/transactions`, {
           method: "POST",
           body: JSON.stringify({
             "method": "Mint",
@@ -96,7 +96,7 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
-      const res = await fetch("http://localhost:3000/api/transactions", {
+      const res = await fetch(`${process.env.BASE_URL}/api/transactions`, {
           method: "POST",
           body: JSON.stringify({
             "method": "Transfer",
@@ -133,7 +133,7 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
-      const res = await fetch("http://localhost:3000/api/transactions", {
+      const res = await fetch(`${process.env.BASE_URL}/api/transactions`, {
           method: "POST",
           body: JSON.stringify({
             "method": "Transfer",
