@@ -136,7 +136,7 @@ const PlaygroundTable = function (){
       const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`, {
           method: "POST",
           body: JSON.stringify({
-            "method": "Transfer",
+            "method": "Burn",
             "tx": receipt.transactionHash,
             "from":userAddress,
             "to":"-",
