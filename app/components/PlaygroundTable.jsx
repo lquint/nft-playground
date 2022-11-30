@@ -320,26 +320,26 @@ const PlaygroundTable = function (){
     const burnButtonGradient =
       document.getElementsByClassName('burnButtonGradient');
 
-    /* global foo */
+    /* eslint-disable prefer-arrow-callback */
     for (let i = 0; i < transferButtons.length; i =+ 1) {
       transferButtons[i].addEventListener(
         'click',
-        foo(() => transferNFT(tokenIDList[i])),
+        function(){transferNFT(tokenIDList[i])},
         'false'
       );
       transferButtonGradient[i].addEventListener(
         'click',
-        foo(() => transferNFT(tokenIDList[i])),
+        function(){transferNFT(tokenIDList[i])},
         'false'
       );
       burnButtons[i].addEventListener(
         'click',
-        foo(() => burnNFT(tokenIDList[i])),
+        function(){burnNFT(tokenIDList[i])},
         'false'
       );
       burnButtonGradient[i].addEventListener(
         'click',
-        foo(() => burnNFT(tokenIDList[i])),
+        function(){burnNFT(tokenIDList[i])},
         'false'
       );
     }
