@@ -3,10 +3,10 @@ import React from 'react';
 
 const Transactions = function transactions() {
   
-  
+  const baseURL=process.env.BASE_URL
 
   async function getDB() {
-    let res = await fetch(`${process.env.BASE_URL}/api/transactions`, {
+    let res = await fetch(`${baseURL}/api/transactions`, {
       method: "GET"
     });
     res = await res.json();
