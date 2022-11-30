@@ -321,27 +321,23 @@ const PlaygroundTable = function (){
       document.getElementsByClassName('burnButtonGradient');
 
     /* eslint-disable prefer-arrow-callback */
-    for (let i = 0; i < transferButtons.length; i =+ 1) {
+    for (let i = 0; i < transferButtons.length; i += 1) {
       transferButtons[i].addEventListener(
-        'click',
-        function(){transferNFT(tokenIDList[i])},
-        'false'
-      );
+        'click',function(){
+          transferNFT(tokenIDList[i]);
+      },"false")
       transferButtonGradient[i].addEventListener(
-        'click',
-        function(){transferNFT(tokenIDList[i])},
-        'false'
-      );
+        'click',function(){
+          transferNFT(tokenIDList[i]);
+      },"false")
       burnButtons[i].addEventListener(
-        'click',
-        function(){burnNFT(tokenIDList[i])},
-        'false'
-      );
+        'click',function(){
+          burnNFT(tokenIDList[i]);
+      },"false")
       burnButtonGradient[i].addEventListener(
-        'click',
-        function(){burnNFT(tokenIDList[i])},
-        'false'
-      );
+        'click',function(){
+          burnNFT(tokenIDList[i]);
+      },"false")
     }
   }
 
