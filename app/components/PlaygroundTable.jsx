@@ -44,8 +44,23 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch("http://localhost:3000/api/transactions", {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Mint",
+            "tx": receipt.transactionHash,
+            "from":ERC721Address,
+            "to":userAddress,
+            "timestamp":new Date().toISOString()
+            
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
+      const button = document.getElementById('mintDummy');
+      button.disabled = false;
+      button.innerHTML = 'Mint Dummy NFT';
       console.log(err);
       return err;
     }
@@ -125,8 +140,31 @@ const PlaygroundTable = function (){
   }
 
   async function mintDummyNFT() {
-    const tokenURI = 'nft/metadata/dummyNFT.json';
-    proceedMinting(tokenURI);
+    let txHash;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to mint a token ?",
+      icon: 'warning',
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, mint it !',
+      preConfirm: async () => {
+        const tokenURI = 'nft/metadata/dummyNFT.json';
+        txHash = await proceedMinting(tokenURI);
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Minted !',
+          icon: 'success',
+          html:
+            'Your token has been minted, ' +
+            `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank" rel="noopener noreferrer">here</a></u>`,
+        });
+      }
+    });
   }
 
   async function transferNFT(tokenID) {
@@ -345,7 +383,7 @@ const PlaygroundTable = function (){
 
   return (
     <>
-      <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10">
+      <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10 playground">
         <div
           id="contractBar"
           className="flex flex-row mt-auto ml-4 gap-x-3"
