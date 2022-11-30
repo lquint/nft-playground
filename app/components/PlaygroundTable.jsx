@@ -96,6 +96,17 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch("http://localhost:3000/api/transactions", {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Transfer",
+            "tx": receipt.transactionHash,
+            "from":userAddress,
+            "to":to,
+            "timestamp":new Date().toISOString(),
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
       console.log(err);
@@ -107,6 +118,7 @@ const PlaygroundTable = function (){
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
+    const userAddress = await signer.getAddress();
     const ERC721Address = '0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad';
     const ERC721ABI = ['function burn(uint256 tokenId) public'];
     const ERC721Contract = new ethers.Contract(
@@ -121,6 +133,17 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch("http://localhost:3000/api/transactions", {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Transfer",
+            "tx": receipt.transactionHash,
+            "from":userAddress,
+            "to":"-",
+            "timestamp":new Date().toISOString(),
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
       console.log(err);
