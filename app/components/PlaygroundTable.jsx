@@ -51,7 +51,7 @@ const PlaygroundTable = function (){
             "tx": receipt.transactionHash,
             "from":ERC721Address,
             "to":userAddress,
-            "timestamp":new Date().toISOString()
+            "timestamp":new Date().valueOf()
             
           }),
         });
@@ -103,7 +103,7 @@ const PlaygroundTable = function (){
             "tx": receipt.transactionHash,
             "from":userAddress,
             "to":to,
-            "timestamp":new Date().toISOString(),
+            "timestamp":new Date().valueOf(),
           }),
         });
         console.log(res)
@@ -140,7 +140,7 @@ const PlaygroundTable = function (){
             "tx": receipt.transactionHash,
             "from":userAddress,
             "to":"-",
-            "timestamp":new Date().toISOString(),
+            "timestamp":new Date().valueOf(),
           }),
         });
         console.log(res)
