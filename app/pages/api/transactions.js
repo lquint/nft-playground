@@ -23,11 +23,9 @@ export default async function handler(req, res) {
       let nextLeft;
       let nextRight;
       let rightBoolean;
-      let leftBoolean
-      console.log(req.query)
+      let leftBoolean;
       let {timestamp}=req.query;
       timestamp=parseInt(timestamp,10)
-      console.log(req.query.side)
       switch (req.query.side){
         case "left":
           leftDb = await db.collection("transactions").aggregate([
