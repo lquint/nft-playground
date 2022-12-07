@@ -3,17 +3,34 @@ import React from 'react';
 
 const Transactions = function transactions() {
   
-  async function getDB() {
-    let res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`, {
-      method: "GET"
+  async function getDB(side,timestamp) {
+    let res
+    if(side==="initial"){
+      const url=`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions?`
+      const params=new URLSearchParams({
+        "side":side,
+        "timestamp":timestamp,
+    })
+      res= await fetch(url+params, {
+        method: "GET",
+      });
+  } else{
+    const url=`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions?`
+    const params=new URLSearchParams({
+      side,
+      timestamp,
+  })
+    res= await fetch(url+params, {
+      method: "GET",
     });
+  }
     res = await res.json();
     return res
   };
 
   React.useEffect(() => {
-    async function displayTransactions(){
-        const res= await getDB()
+      async function displayTransactions(side,timestamp){
+        const res= await getDB(side,timestamp)
         let html=`
         <table class="w-full table-fixed mx-auto bg-slate-200">
         <thead class="border-b border-gray-400">
@@ -27,7 +44,9 @@ const Transactions = function transactions() {
         </thead>
         <tbody>
         `
-        const db=res.data
+        const db=await res.data
+        const firstTimestamp=db[0].timestamp;
+        const lastTimestamp=db[db.length-1].timestamp;
         for(let i = 0; i < db.length; i += 1) {
             html += `
             <tr>
@@ -35,7 +54,7 @@ const Transactions = function transactions() {
               <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].tx}</p></td>
               <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].from}</p></td>
               <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].to}</p></td>
-              <td class="text-center text-sm">${db[i].timestamp}</td>
+              <td class="text-center text-sm">${new Date(db[i].timestamp).toISOString()}</td>
             </tr>
             `
 
@@ -43,11 +62,22 @@ const Transactions = function transactions() {
         html+=`
         </tbody>
         </table>
+        <div className='flex pt-2'><button id="leftArrow" className='mx-auto'><</button><button  id="rightArrow" className='mx-auto'>></button></div>
         `
         const transactionList = document.getElementById("displayDB")
         transactionList.innerHTML=html;
+        const leftArrow=document.getElementById("leftArrow");
+        const rightArrow=document.getElementById("rightArrow")
+        leftArrow.addEventListener("click",()=>{
+          displayTransactions("left",firstTimestamp)
+        })
+        rightArrow.addEventListener("click",()=>{
+          displayTransactions("right",lastTimestamp)
+        })
+        rightArrow.disabled=!res.rightBoolean
+        leftArrow.disabled=!res.leftBoolean
     }
-    displayTransactions()
+    displayTransactions("initial","")
   });
 
   return (
@@ -57,6 +87,7 @@ const Transactions = function transactions() {
         Transactions made from this web app will be listed right below
       </p>
       <div id="displayDB"/>
+      
     </div>
 
   );
