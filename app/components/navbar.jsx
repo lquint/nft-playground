@@ -12,6 +12,7 @@ const user = {
 };
 const navigation = [
   { name: 'Playground', href: '/', current: false },
+  { name: 'Transactions', href: '/transactions', current: false },
   { name: 'About', href: '/about', current: false },
 ];
 const userNavigation = [

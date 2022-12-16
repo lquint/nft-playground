@@ -44,8 +44,23 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`, {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Mint",
+            "tx": receipt.transactionHash,
+            "from":ERC721Address,
+            "to":userAddress,
+            "timestamp":new Date().valueOf()
+            
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
+      const button = document.getElementById('mintDummy');
+      button.disabled = false;
+      button.innerHTML = 'Mint Dummy NFT';
       console.log(err);
       return err;
     }
@@ -81,6 +96,17 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`, {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Transfer",
+            "tx": receipt.transactionHash,
+            "from":userAddress,
+            "to":to,
+            "timestamp":new Date().valueOf(),
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
       console.log(err);
@@ -92,6 +118,7 @@ const PlaygroundTable = function (){
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     // await provider.send("eth_requestAccounts", []);
     const signer = provider.getSigner();
+    const userAddress = await signer.getAddress();
     const ERC721Address = '0x8ba5488f536e379ab35be9f7a4ecb8c41e27baad';
     const ERC721ABI = ['function burn(uint256 tokenId) public'];
     const ERC721Contract = new ethers.Contract(
@@ -106,6 +133,17 @@ const PlaygroundTable = function (){
       // Receipt should now contain the logs
       console.log(receipt);
       setTokenDisplay();
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/transactions`, {
+          method: "POST",
+          body: JSON.stringify({
+            "method": "Burn",
+            "tx": receipt.transactionHash,
+            "from":userAddress,
+            "to":"-",
+            "timestamp":new Date().valueOf(),
+          }),
+        });
+        console.log(res)
       return receipt.transactionHash;
     } catch (err) {
       console.log(err);
@@ -125,8 +163,31 @@ const PlaygroundTable = function (){
   }
 
   async function mintDummyNFT() {
-    const tokenURI = 'nft/metadata/dummyNFT.json';
-    proceedMinting(tokenURI);
+    let txHash;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to mint a token ?",
+      icon: 'warning',
+      showCancelButton: true,
+      showLoaderOnConfirm: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, mint it !',
+      preConfirm: async () => {
+        const tokenURI = 'nft/metadata/dummyNFT.json';
+        txHash = await proceedMinting(tokenURI);
+      },
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Minted !',
+          icon: 'success',
+          html:
+            'Your token has been minted, ' +
+            `You can check transactions details <u><a href="https://goerli.etherscan.io/tx/${txHash}" target="_blank" rel="noopener noreferrer">here</a></u>`,
+        });
+      }
+    });
   }
 
   async function transferNFT(tokenID) {
@@ -259,28 +320,24 @@ const PlaygroundTable = function (){
     const burnButtonGradient =
       document.getElementsByClassName('burnButtonGradient');
 
-    /* global foo */
-    for (let i = 0; i < transferButtons.length; i =+ 1) {
+    /* eslint-disable prefer-arrow-callback */
+    for (let i = 0; i < transferButtons.length; i += 1) {
       transferButtons[i].addEventListener(
-        'click',
-        foo(() => transferNFT(tokenIDList[i])),
-        'false'
-      );
+        'click',function(){
+          transferNFT(tokenIDList[i]);
+      },"false")
       transferButtonGradient[i].addEventListener(
-        'click',
-        foo(() => transferNFT(tokenIDList[i])),
-        'false'
-      );
+        'click',function(){
+          transferNFT(tokenIDList[i]);
+      },"false")
       burnButtons[i].addEventListener(
-        'click',
-        foo(() => burnNFT(tokenIDList[i])),
-        'false'
-      );
+        'click',function(){
+          burnNFT(tokenIDList[i]);
+      },"false")
       burnButtonGradient[i].addEventListener(
-        'click',
-        foo(() => burnNFT(tokenIDList[i])),
-        'false'
-      );
+        'click',function(){
+          burnNFT(tokenIDList[i]);
+      },"false")
     }
   }
 
@@ -345,7 +402,7 @@ const PlaygroundTable = function (){
 
   return (
     <>
-      <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10">
+      <div className="container flex flex-row flex-wrap mx-auto overflow-y-auto bg-sky-400 gap-x-10 gap-y-10 playground">
         <div
           id="contractBar"
           className="flex flex-row mt-auto ml-4 gap-x-3"
