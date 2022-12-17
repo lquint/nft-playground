@@ -3,10 +3,10 @@ import React from 'react';
 
 export default function Home() {
   return (
-    <div className="content">
-       <div className='flex justify-center'>
+    <div className="w-8/12 mx-auto">
+       <div className='flex justify-center mb-10 gap-x-6'>
           <img
-            className="w-[1095px] rounded-full"
+            className="w-[643px] rounded-full"
             src="/img/mainImg.jpg"
             alt="NFT"
             />
@@ -16,30 +16,33 @@ export default function Home() {
             <p className="text-[20px]">Manipulate ERC-721 tokens to learn better</p>
           </div>
         </div>
-        <div className='flex justify-center gap-x-32'>
-          <div className='flex flex-col justify-center'>
+        <div className='flex justify-center w-auto pb-6 gap-x-32'>
+          <div className='flex flex-col items-center justify-end basis-[445px]'>
             <img
             className="w-[222px]"
             src="/img/nft_sell.png"
             alt="Functiunality Illustration"
             />
-            <p className='text-center'>AA</p>
+            <p className='font-light text-center text-[20px]'>Interact with a smart contract
+calling methods like mint, transfer, burn</p>
           </div>
-          <div className='flex flex-col justify-center'>
+          <div className='flex flex-col items-center justify-end basis-[445px]'>
             <img
-            className="w-[297px]"
+            className="w-[297px] mb-4"
             src="/img/transactions_v5.png"
             alt="Functiunality Illustration"
             />
-            <p className='text-center'>AA</p>
+            <p className='font-light text-center text-[20px]'>View all transactions made 
+through the application</p>
           </div>
-          <div>
+          <div className='flex flex-col justify-end items-center basis-[445px]'>
             <img
-            className="w-[297px]"
+            className="w-[190px] mb-5"
             src="/img/developers-eth-blocks.png"
             alt="Functiunality Illustration"
             />
-            <p className='text-center'>AA</p>
+            <p className='font-light text-center text-[20px]'>View all transactions made 
+through the application</p>
           </div>
         </div>
     </div>
