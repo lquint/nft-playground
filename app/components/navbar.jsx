@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const nav = function navbar()  {
     return ( 
-        <div className="flex items-center h-20 text-2xl gap-x-[68px] ml-[40px] mb-20">
+        <div className="flex items-center h-20 text-2xl gap-x-[68px] ml-[40px] mb-16">
             <Link href="/">
                 <a href="/">
                 <img
