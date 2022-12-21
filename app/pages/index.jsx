@@ -11,7 +11,7 @@ export default function Home() {
             alt="NFT"
             />
           <div className='flex flex-col justify-center'>
-            <p className="text-[80px] font-bold">Experiment With NFTs</p>
+            <p className="text-[80px] font-bold">Experiment <br/>With NFTs</p>
             <p className="text-[20px]">Make your first steps into web3</p>
             <p className="text-[20px]">Manipulate ERC-721 tokens to learn better</p>
           </div>
@@ -41,8 +41,7 @@ through the application</p>
             src="/img/developers-eth-blocks.png"
             alt="Functiunality Illustration"
             />
-            <p className='font-light text-center text-[20px]'>View all transactions made 
-through the application</p>
+            <p className='font-light text-center text-[20px]'>Check the code behind the application to learn blockchain programming</p>
           </div>
         </div>
     </div>
