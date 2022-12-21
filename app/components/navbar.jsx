@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from "next/link";
 
 const nav = function navbar()  {
@@ -11,10 +12,11 @@ const nav = function navbar()  {
                 alt="Your Company"
                 /></a>
             </Link>
-            <Link href="/">Home</Link>
-            <Link href="/playground">Playground</Link>
-            <Link href="/transactions">Transactions</Link>
-            <Link href="/about">About</Link>
+            
+            <div className='underline-effect'><Link href="/">Home</Link></div>
+            <div className='underline-effect'><Link href="/playground">Playground</Link></div>
+            <div className='underline-effect'><Link href="/transactions">Transactions</Link></div>
+            <div className='underline-effect'><Link href="/about">About</Link></div>
         </div>
      );
 }
