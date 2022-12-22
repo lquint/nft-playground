@@ -2,6 +2,13 @@ import React from 'react';
 
 
 export default function Home() {
+  React.useEffect(() => {
+    document.getElementById("homelink").classList.add('active-page');
+    document.getElementById("aboutlink").classList.remove('active-page');
+    document.getElementById("playgroundlink").classList.remove('active-page');
+    document.getElementById("transactionslink").classList.remove('active-page');
+  });
+
   return (
     <div className="w-8/12 mx-auto">
        <div className='flex justify-center mb-10 gap-x-6'>

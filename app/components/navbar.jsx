@@ -13,10 +13,10 @@ const nav = function navbar()  {
                 /></a>
             </Link>
             
-            <div className='underline-effect'><Link href="/">Home</Link></div>
-            <div className='underline-effect'><Link href="/playground">Playground</Link></div>
-            <div className='underline-effect'><Link href="/transactions">Transactions</Link></div>
-            <div className='underline-effect'><Link href="/about">About</Link></div>
+            <div className='underline-effect' id="homelink"><Link href="/">Home</Link></div>
+            <div className='underline-effect' id="playgroundlink"><Link href="/playground">Playground</Link></div>
+            <div className='underline-effect' id="transactionslink"><Link href="/transactions">Transactions</Link></div>
+            <div className='underline-effect' id="aboutlink"><Link href="/about">About</Link></div>
         </div>
      );
 }

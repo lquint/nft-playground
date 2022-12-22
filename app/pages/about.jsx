@@ -1,6 +1,14 @@
 import React from 'react';
 
 const About = function about() {
+  React.useEffect(() => {
+    document.getElementById("aboutlink").classList.add('active-page');
+    document.getElementById("homelink").classList.remove('active-page');
+    document.getElementById("playgroundlink").classList.remove('active-page');
+    document.getElementById("transactionslink").classList.remove('active-page');
+
+  });
+  
   return (
     <div className='content'>
       <h1 className='text-2xl mt-7'>About</h1>

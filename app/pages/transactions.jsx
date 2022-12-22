@@ -29,6 +29,11 @@ const Transactions = function transactions() {
   };
 
   React.useEffect(() => {
+    document.getElementById("transactionslink").classList.add('active-page');
+    document.getElementById("homelink").classList.remove('active-page');
+    document.getElementById("playgroundlink").classList.remove('active-page');
+    document.getElementById("aboutlink").classList.remove('active-page');
+
       async function displayTransactions(side,timestamp){
         const res= await getDB(side,timestamp)
         let html=`
