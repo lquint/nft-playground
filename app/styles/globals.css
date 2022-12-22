@@ -8,10 +8,7 @@ body {
   color: white;
 }
 
-a {
-  color: white;
-  text-decoration: none;
-}
+
 
 .content {
   max-width: 960px;
@@ -38,7 +35,7 @@ footer {
 }
 
 .page-standard{
-  height:81vh;
+  height:80vh;
 }
 
 .playground{
