@@ -4,8 +4,8 @@ import sadge from '../public/gifs/sadge.gif';
 
 const NotFound = function notFound() {
   return (
-    <div className="not-found">
-      <div className="flex flex-col items-center justify-center w-full space-y-4 page-standard lg-flex-row">
+    <div className="flex items-center not-found">
+      <div className="flex flex-col items-center justify-center w-full space-y-4 lg-flex-row">
         <div className="relative overflow-hidden rounded-full w-36 h-36 ring-2 ring-pink-300 ring-offset-4">
           <Image
             objectFit="cover"
