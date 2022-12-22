@@ -10,7 +10,7 @@ export default function Home() {
   });
 
   return (
-    <div className="content page-standard">
+    <div className="mb-16 content page-standard">
       <PlaygroundTable />
     </div>
   );
