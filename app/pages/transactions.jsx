@@ -29,11 +29,16 @@ const Transactions = function transactions() {
   };
 
   React.useEffect(() => {
+    document.getElementById("transactionslink").classList.add('active-page');
+    document.getElementById("homelink").classList.remove('active-page');
+    document.getElementById("playgroundlink").classList.remove('active-page');
+    document.getElementById("aboutlink").classList.remove('active-page');
+
       async function displayTransactions(side,timestamp){
         const res= await getDB(side,timestamp)
         let html=`
-        <table class="w-full table-fixed mx-auto bg-slate-200">
-        <thead class="border-b border-gray-400">
+        <table class="w-full table-fixed mx-auto">
+        <thead class="border-b border-[#BABABA]">
           <tr>
             <th class="w-1/12">Method</th>
             <th class="w-1/5">Txn Hash</th>
@@ -49,12 +54,12 @@ const Transactions = function transactions() {
         const lastTimestamp=db[db.length-1].timestamp;
         for(let i = 0; i < db.length; i += 1) {
             html += `
-            <tr>
-              <td class="text-center text-sm">${db[i].method}</td>
-              <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].tx}</p></td>
-              <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].from}</p></td>
-              <td class="w-1/5 text-center mx-auto"><p class="text-sm mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].to}</p></td>
-              <td class="text-center text-sm">${new Date(db[i].timestamp).toISOString()}</td>
+            <tr class="border-t border-[#BABABA] ">
+              <td class="text-center border-r border-[#BABABA]">${db[i].method}</td>
+              <td class="w-1/5 text-center mx-auto border-r border-[#BABABA]"><p class=" mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].tx}</p></td>
+              <td class="w-1/5 text-center mx-auto border-r border-[#BABABA]"><p class=" mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].from}</p></td>
+              <td class="w-1/5 text-center mx-auto border-r border-[#BABABA]"><p class=" mx-auto w-9/12 text-center text-ellipsis overflow-hidden">${db[i].to}</p></td>
+              <td class="text-center ">${new Date(db[i].timestamp).toISOString()}</td>
             </tr>
             `
 
@@ -62,7 +67,7 @@ const Transactions = function transactions() {
         html+=`
         </tbody>
         </table>
-        <div className='flex pt-2'><button id="leftArrow" className='mx-auto'><</button><button  id="rightArrow" className='mx-auto'>></button></div>
+        <div class='flex  items-center justify-center py-2 border-b border-t border-[#BABABA]'><button id="leftArrow" className='mx-2'><</button><button  id="rightArrow" class='mx-2'>></button></div>
         `
         const transactionList = document.getElementById("displayDB")
         transactionList.innerHTML=html;
@@ -81,12 +86,12 @@ const Transactions = function transactions() {
   });
 
   return (
-    <div className='mx-auto page-table'>
-      <h1 className='text-2xl mt-7'>Transactions</h1>
-      <p className='pb-5 mt-5 text-lg'>
+    <div className='mx-auto page-table min-h-max'>
+      <h1 className='text-[80px] font-bold'>Transactions</h1>
+      <p className='pb-5 text-[20px]'>
         Transactions made from this web app will be listed right below
       </p>
-      <div id="displayDB"/>
+      <div id="displayDB" className='mt-6 text-[20px]'/>
       
     </div>
 
