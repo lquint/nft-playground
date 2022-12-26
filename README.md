@@ -30,8 +30,8 @@
 - Mint, transfer and burn tokens
 
 
-## Screenshots TODO
-![Example screenshot](./img/screenshot.png)
+## Screenshots
+<img src="app/public/img/mint_example.PNG" alt="drawing" width="600"/>
 
 
 ## Project Status
